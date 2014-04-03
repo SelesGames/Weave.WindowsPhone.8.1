@@ -1,0 +1,141 @@
+﻿<weave:WeavePage
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:weave"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:weave="clr-namespace:weave;assembly=SelesGames.Common.Reactive"
+	xmlns:wc="clr-namespace:Weave.UI.Controls;assembly=Weave.UI.Controls"
+	xmlns:sgcore="clr-namespace:SelesGames.Phone;assembly=SelesGames.Phone"
+	xmlns:sgConverters="clr-namespace:SelesGames.Phone.ValueConverters;assembly=SelesGames.Phone"
+	xmlns:sg="clr-namespace:SelesGames.Phone.Controls;assembly=SelesGames.Phone.Controls"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+	x:Class="weave.SamplePanorama"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+	Orientation="Portrait"
+	Foreground="{StaticResource PanoramaForegroundBrush}"
+	FontFamily="{StaticResource AppSpecificFontFamily}"
+	shell:SystemTray.IsVisible="False">
+	<weave:WeavePage.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/weave;component/Pages/Panorama/Resources/MosaicHubTileStyles.xaml" />
+				<ResourceDictionary Source="/weave;component/Pages/Panorama/Resources/PanoButtonStyles.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		
+			<Style x:Key="PanoramaItemStyle" TargetType="phone:PanoramaItem">
+				<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+				<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+				<Setter Property="Margin" Value="0,-45,0,0"/>
+			</Style>
+				
+			<ItemsPanelTemplate x:Key="WrapPanelTemplate"><toolkit:WrapPanel /></ItemsPanelTemplate>
+
+			<DataTemplate x:Key="MostViewedItemTemplate">
+				<Button Style="{StaticResource MostViewedButtonTemplate}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="OnMostViewedTapped" />
+			</DataTemplate>
+
+            <sgConverters:InverseBooleanValueConverter x:Key="InverseBool" />
+			<local:UserIdConverter x:Key="IdConverter" />
+			<SolidColorBrush x:Key="TextSubtleBrush" Color="#99FFFFFF"/>
+		</ResourceDictionary>
+
+	</weave:WeavePage.Resources>
+		
+	<Grid x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource SamplePanoramaViewModel}}">
+		
+		<!--Grid x:Name="guides" IsHitTestVisible="False" Canvas.ZIndex="1">
+			<Image Source="/Assets/AlignmentGrid.png" Width="480" Height="800"/>
+			<Grid Name="panoLines" Margin="0,-38,0,0">
+				<Rectangle Fill="#FFF4F4F5" Height="1" VerticalAlignment="Top" Margin="0,127,0,0"/>
+				<Rectangle Fill="#FFF4F4F5" Height="1" VerticalAlignment="Top" Margin="0,258,0,0"/>
+				<Rectangle x:Name="panoramaHeaderTopLine" Fill="White" Height="1" Margin="0,182,0,0" VerticalAlignment="Top"/>
+				<Rectangle x:Name="panoramaItemTopLine" Fill="White" Height="1" Margin="0,302,0,0" VerticalAlignment="Top"/>
+			</Grid>
+			<Rectangle Fill="#FF2DFF00" Width="24" Name="Left24" HorizontalAlignment="Left" Opacity="0.5" />
+			<Rectangle Fill="#FF2DFF00" Width="24" Name="Right24" HorizontalAlignment="Right" Opacity="0.5" />
+			<Rectangle Fill="#FF2DFF00" Height="24" Name="Bottom24" VerticalAlignment="Bottom" Opacity="0.5" />
+		</Grid-->
+		
+		<phone:Panorama x:Name="pano" Foreground="{StaticResource PanoramaForegroundBrush}" Background="{StaticResource PanoramaBackgroundBrush}" FontFamily="{StaticResource AppSpecificFontFamily}" Title=" " Margin="0,-24,0,0">										
+			<phone:PanoramaItem x:Name="Menu" Margin="0,-60,0,0" Style="{StaticResource PanoramaItemStyle}" >
+				<Grid Margin="12,0">
+					<TextBlock HorizontalAlignment="Left" Text="MOST VIEWED" VerticalAlignment="Top" FontFamily="Segoe WP Black" RenderTransformOrigin="0,0.5" Margin="19,-33,0,0" FontSize="45.333" Foreground="{StaticResource PanoramaForegroundBrush}" Opacity="0.96">
+						<TextBlock.RenderTransform>
+							<CompositeTransform Rotation="90"/>
+						</TextBlock.RenderTransform>
+					</TextBlock>
+					<StackPanel x:Name="menuTileWrapper" Margin="46,0,-24,0" VerticalAlignment="Top">
+						<ItemsControl x:Name="mostViewed" ItemsPanel="{StaticResource WrapPanelTemplate}" ItemsSource="{Binding MostViewed}" ItemTemplate="{StaticResource MostViewedItemTemplate}"/>
+						<telerikPrimitives:RadMosaicHubTile 
+							x:Name="mosaicHubTile" 
+							Title="all sources"
+							ImageSources="{Binding Feeds}" 
+							HorizontalAlignment="Left"
+							Height="156" 
+							Margin="0" 
+							Width="324" 
+							Style="{StaticResource RadMosaicHubTileStyle1}" 
+							FontFamily="{StaticResource PhoneFontFamilySemiLight}" 
+							FontSize="{StaticResource PhoneFontSizeLarge}" 
+							Foreground="#F4FFFFFF"
+							Tap="allSourcesButtonTap" />
+					</StackPanel>
+				</Grid>
+			</phone:PanoramaItem>
+					
+			<phone:PanoramaItem x:Name="Featured_News" Orientation="Horizontal" CacheMode="{x:Null}" Header="latest articles" Style="{StaticResource PanoramaItemStyle}" >
+				<Grid>
+					<local:CategoryDisplayGrid x:Name="cat1" Height="460" Width="828" VerticalAlignment="Top" Margin="12,0,0,0" News="{Binding LatestNews}" />			
+					<Button Content="all news" Foreground="{StaticResource PanoramaForegroundBrush}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TrueTextButtonStyle}" Margin="0,448,-12,0" Tap="allNewsButtonTap" toolkit:TiltEffect.IsTiltEnabled="True" />
+				</Grid>
+			</phone:PanoramaItem>
+
+			<phone:PanoramaItem x:Name="Account" Header="account" Style="{StaticResource PanoramaItemStyle}">
+				<Grid>
+					<TextBlock Text="{Binding Id, Converter={StaticResource IdConverter}}" Margin="12,-50,0,0" FontSize="{StaticResource PhoneFontSizeSmall}" Foreground="{StaticResource TextSubtleBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+					<StackPanel x:Name="menu" Orientation="Vertical" VerticalAlignment="Top" toolkit:TiltEffect.IsTiltEnabled="True">
+						<!--Button Content="Sign-in or sign-up for an account" Foreground="{StaticResource PanoramaForegroundBrush}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Tap="OnLoginButtonTap" Style="{StaticResource SignInButtonStyle}" HorizontalAlignment="Left" Padding="11,8,11,5" /-->
+						<sg:ImageWithLabelButton Content="favorites" Style="{StaticResource ImageWithLabelButtonStyle}" Source="/Assets/Icons/tiny_heart.png" Tap="favoritesButtonTap" Margin="0,-5,0,0"/>
+						<sg:ImageWithLabelButton Content="previously read" Style="{StaticResource ImageWithLabelButtonStyle}" Source="/Assets/Icons/appbar.eye.png" Tap="readButtonTap"/>
+						<sg:ImageWithLabelButton Content="manage sources" Style="{StaticResource ImageWithLabelButtonStyle}" Source="/Assets/Icons/appbar.rss.png" Tap="manageSourcesButtonTap"/>
+					</StackPanel>
+				</Grid>
+			</phone:PanoramaItem>
+
+			<phone:PanoramaItem x:Name="Login" Header="login &amp; sync" Style="{StaticResource PanoramaItemStyle}">
+				<Grid x:Name="loginMenu" toolkit:TiltEffect.IsTiltEnabled="True" VerticalAlignment="Top">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Rectangle Fill="Black" Visibility="Collapsed" />
+					<Rectangle Grid.Row="1" Grid.RowSpan="4" Fill="#FF303030" Stroke="White" Visibility="Collapsed" />
+					<TextBlock Foreground="{StaticResource TextSubtleBrush}" Text="Link your Weave account to any of the social networks below if you'd like to access your feeds and preferences on multiple devices" Margin="12,0,12,12" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeNormal}" LineStackingStrategy="BlockLineHeight" LineHeight="21.333"/>
+					<wc:LoginButton Grid.Row="1" IsLoggedIn="{Binding IsMicrosoftSynced}" IsEnabled="{Binding IsMicrosoftSynced, Converter={StaticResource InverseBool}}" LoggedOutText="Login via Microsoft account" Content="Microsoft" Source="/Assets/Login/Microsoft.png" Tap="OnMicrosoftButtonTap" Margin="0,12,0,0" Height="72" Style="{StaticResource LoginButtonStyle}" />
+					<wc:LoginButton Grid.Row="2" IsLoggedIn="{Binding IsFacebookSynced}" IsEnabled="{Binding IsFacebookSynced, Converter={StaticResource InverseBool}}" LoggedOutText="Login via Facebook account" Content="Facebook" Source="/Assets/Login/Facebook.png" Tap="OnFacebookButtonTap" Height="72" Style="{StaticResource LoginButtonStyle}" />
+					<wc:LoginButton Grid.Row="3" IsLoggedIn="{Binding IsTwitterSynced}" IsEnabled="{Binding IsTwitterSynced, Converter={StaticResource InverseBool}}" LoggedOutText="Login via Twitter account" Content="Twitter" Source="/Assets/Login/Twitter.png" Tap="OnTwitterButtonTap" Height="72" Style="{StaticResource LoginButtonStyle}" />
+					<wc:LoginButton Grid.Row="4" IsLoggedIn="{Binding IsGoogleSynced}" IsEnabled="{Binding IsGoogleSynced, Converter={StaticResource InverseBool}}" LoggedOutText="Login via Google account" Content="Google" Source="/Assets/Login/Google.png" Tap="OnGoogleButtonTap" Height="72" Style="{StaticResource LoginButtonStyle}" />
+				</Grid>
+			</phone:PanoramaItem>
+					
+		</phone:Panorama>
+
+		<TextBlock IsHitTestVisible="False" HorizontalAlignment="Left" TextWrapping="Wrap" Text="weave" VerticalAlignment="Top" Foreground="{StaticResource PanoramaForegroundBrush}" Margin="24,0,0,0" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Style="{StaticResource PanoramaItemHeaderTextStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+		<TextBlock IsHitTestVisible="False" HorizontalAlignment="Left" TextWrapping="Wrap" Text="NEWS READER" VerticalAlignment="Top" Foreground="{StaticResource PanoramaForegroundBrush}" Margin="25,44,0,0" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Style="{StaticResource PanoramaItemHeaderTextStyle}" FontSize="18.667" Opacity="0.5" CharacterSpacing="-76"/>
+	</Grid>
+	
+	<weave:WeavePage.ApplicationBar>
+		<shell:ApplicationBar Opacity="0.99" ForegroundColor="White" BackgroundColor="#CC000000" IsMenuEnabled="False" Mode="Minimized">
+			<shell:ApplicationBarIconButton IconUri="/Assets/Icons/64x64_info.png" Text="info" Click="OnInfoAppBarButtonClicked"/>
+			<shell:ApplicationBarIconButton IconUri="/Assets/Icons/48x48_small_settings.png" Text="settings" Click="OnSettingsAppBarButtonClicked"/>
+		</shell:ApplicationBar>
+	</weave:WeavePage.ApplicationBar>
+
+</weave:WeavePage>

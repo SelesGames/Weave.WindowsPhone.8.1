@@ -1,0 +1,37 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	xmlns:loc="clr-namespace:weave"	
+	x:Class="weave.CategoryDisplayGrid"
+	d:DesignWidth="828" d:DesignHeight="460">
+
+	<UserControl.Resources>
+		<Style x:Key="tileStyle" TargetType="loc:NewsItemWithImageTile3">
+			<Setter Property="Margin" Value="6,0,6,12" />
+		</Style>
+	</UserControl.Resources>
+	
+	<Grid x:Name="LayoutRoot" Margin="-6,0">
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<loc:NewsItemWithImageTile3 x:Name="item1" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item2" Grid.Column="1" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item3" Grid.Column="2" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item4" Grid.Column="3" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item5" Grid.Row="1" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item6" Grid.Row="1" Grid.Column="1" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item7" Grid.Row="1" Grid.Column="2" Style="{StaticResource tileStyle}" />
+		<loc:NewsItemWithImageTile3 x:Name="item8" Grid.Row="1" Grid.Column="3" Style="{StaticResource tileStyle}" />
+	</Grid>
+</UserControl>

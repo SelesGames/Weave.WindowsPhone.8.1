@@ -1,0 +1,42 @@
+﻿<phone:PhoneApplicationPage 
+	x:Class="weave.OneNoteSignInPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:live="clr-namespace:Microsoft.Live.Controls;assembly=Microsoft.Live.Controls"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="PortraitOrLandscape"
+	xmlns:loc="clr-namespace:weave"	
+	mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480" shell:SystemTray.IsVisible="True">
+
+	<phone:PhoneApplicationPage.Resources>	
+		<loc:UppercaseConverter x:Key="uppercaseConverter" />
+	</phone:PhoneApplicationPage.Resources>
+	
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid Name="LayoutRoot" Background="Transparent">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<!--TitlePanel contains the name of the application and page title-->
+		<StackPanel Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+			<TextBlock Name="ApplicationTitle" DataContext="{StaticResource PanoramaTitle}" Text="{Binding Converter={StaticResource uppercaseConverter}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+			<TextBlock Name="PageTitle" Text="OneNote" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+		</StackPanel>
+
+		<!--ContentPanel - place additional content here-->
+		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+			<TextBlock Text="Sign-in to OneNote with your Windows Live Id, and you can save articles from Weave to OneNote!" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" />
+			<TextBlock x:Name="infoTextBlock" HorizontalAlignment="Center" Margin="0,239,4,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+			<live:SignInButton x:Name="signInButton" Content="SignInButton" HorizontalAlignment="Center" VerticalAlignment="Center" Scopes="office.onenote_create wl.signin wl.offline_access" Branding="MicrosoftAccount" SessionChanged="OnSessionChanged" Width="192" ClientId="00000000440E88B3"/>
+		</Grid>
+	</Grid>
+
+</phone:PhoneApplicationPage>

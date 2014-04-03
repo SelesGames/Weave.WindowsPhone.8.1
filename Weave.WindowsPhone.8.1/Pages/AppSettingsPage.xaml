@@ -1,0 +1,94 @@
+﻿<phone:PhoneApplicationPage
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	xmlns:settings="clr-namespace:Weave.Settings"
+	xmlns:local="clr-namespace:weave"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	xmlns:System="clr-namespace:System;assembly=mscorlib" 
+	x:Class="weave.AppSettingsPage"
+	SupportedOrientations="Portrait" Orientation="Portrait"
+	mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480">
+	<UserControl.Resources>
+		<settings:SpeakArticleVoices x:Key="Voices" />
+		<DataTemplate x:Key="ListPickerSpeechItemTemplate">
+			<TextBlock Text="{Binding DisplayName}"/>
+		</DataTemplate>
+		<DataTemplate x:Key="ListPickerSpeechFullModeTemplate">
+			<TextBlock Text="{Binding DisplayName}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" FontSize="{StaticResource PhoneFontSizeLarge}" Margin="0,12" />
+		</DataTemplate>
+	</UserControl.Resources>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+			<TextBlock x:Name="ApplicationTitle" Text="SETTINGS" Style="{StaticResource PhoneTextNormalStyle}"/>
+			<TextBlock x:Name="PageTitle" Text="cloud &amp; app" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+		</StackPanel>
+
+		<ScrollViewer Grid.Row="1">
+
+			<Grid x:Name="ContentPanel" Margin="12,0,12,0">
+				<StackPanel VerticalAlignment="Bottom" toolkit:TiltEffect.IsTiltEnabled="True">
+					<TextBlock Text="cloud settings" Style="{StaticResource LongListSelectorGroupHeaderLetterTileStyle}" Margin="10,0,12,0" />
+
+					<toolkit:ListPicker x:Name="markedReadList" Header="Delete &quot;marked read&quot; articles after" Margin="12">
+						<System:String>30 minutes</System:String>
+						<System:String>2 hours</System:String>
+						<System:String>6 hours</System:String>
+						<System:String>12 hours</System:String>
+					</toolkit:ListPicker>
+					<toolkit:ListPicker x:Name="unreadList" Header="Delete unread articles after" Margin="12">
+						<System:String>12 hours</System:String>
+						<System:String>1 day</System:String>
+						<System:String>2 days</System:String>
+						<System:String>3 days</System:String>
+					</toolkit:ListPicker>
+
+					<TextBlock Text="phone settings" Style="{StaticResource LongListSelectorGroupHeaderLetterTileStyle}" Margin="9,30,12,12" />
+
+					<toolkit:ToggleSwitch x:Name="articleListToggle">
+						<toolkit:ToggleSwitch.Header>
+							<StackPanel>
+								<TextBlock Text="Hide AppBar on Article List page" />    		
+								<TextBlock Text="recommended ON" FontWeight="Bold" FontSize="{StaticResource PhoneFontSizeSmall}" Foreground="{StaticResource PhoneAccentBrush}" Margin="0,0,0,-4" />
+							</StackPanel>
+						</toolkit:ToggleSwitch.Header>    		
+					</toolkit:ToggleSwitch>
+				
+					<toolkit:ToggleSwitch x:Name="articleViewerToggle">
+						<toolkit:ToggleSwitch.Header>
+							<StackPanel>
+								<TextBlock Text="Hide AppBar on Article Viewer page" />    		
+								<TextBlock Text="recommended ON" FontWeight="Bold" FontSize="{StaticResource PhoneFontSizeSmall}" Foreground="{StaticResource PhoneAccentBrush}" Margin="0,0,0,-4" />
+							</StackPanel>
+						</toolkit:ToggleSwitch.Header>    		
+					</toolkit:ToggleSwitch>
+				
+					<toolkit:ToggleSwitch x:Name="systemTrayToggle">
+						<toolkit:ToggleSwitch.Header>
+							<StackPanel>
+								<TextBlock Text="Show time/battery/signal at top of screen" Margin="0,0,-90,0" />    		
+								<TextBlock Text="recommended OFF" FontWeight="Bold" FontSize="{StaticResource PhoneFontSizeSmall}" Foreground="{StaticResource PhoneAccentBrush}" Margin="0,0,0,-4" />
+							</StackPanel>
+						</toolkit:ToggleSwitch.Header>    		
+					</toolkit:ToggleSwitch>
+				
+					<toolkit:ListPicker x:Name="voicesList" Header="Speak Article voice" ItemsSource="{StaticResource Voices}" Margin="12" ItemTemplate="{StaticResource ListPickerSpeechItemTemplate}" ExpansionMode="ExpansionAllowed" FullModeHeader="'Speak Article' preferred voice" FullModeItemTemplate="{StaticResource ListPickerSpeechFullModeTemplate}" />
+					<Button x:Name="enableLockScreenButton" Content="enable live lock screen" Margin="0,24,0,36" />
+				</StackPanel>      
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</phone:PhoneApplicationPage>

@@ -1,0 +1,77 @@
+﻿<weave:WeavePage
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:local="clr-namespace:weave"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	x:Class="weave.MainPage"
+    xmlns:weave="clr-namespace:weave;assembly=weave.Common.Reactive"
+	xmlns:sg="clr-namespace:SelesGames.Phone.Controls;assembly=SelesGames.Phone.Controls"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"		
+	SupportedOrientations="Portrait"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800">
+
+    <StackPanel x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource SampleRssFeed}}">
+		<local:TiltContentControl x:Name="bigTemplate" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+			<Grid x:Name="grid" Background="Transparent">
+				<StackPanel Margin="24,2,24,12" CacheMode="BitmapCache" IsHitTestVisible="False">
+					<TextBlock x:Name="title" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,4" LineStackingStrategy="BlockLineHeight" Text="This is a sample title" FontSize="26.667" />
+					<TextBlock x:Name="feedName" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Margin="0" TextWrapping="Wrap" Text="Engadget" />
+					<Rectangle x:Name="mediaTypesIcon" Fill="{StaticResource PhoneAccentBrush}" Height="32" Width="128" HorizontalAlignment="Left" Margin="0,12,0,0" >
+						<Rectangle.OpacityMask>
+							<ImageBrush Stretch="Uniform" ImageSource="/Assets/Icons/mediaTypeIcons/podcast_zuneDL.png"/>
+						</Rectangle.OpacityMask>
+					</Rectangle>
+					<Border x:Name="imageWrapper" Margin="0,12,0,36" VerticalAlignment="Top" Height="244" CacheMode="BitmapCache" Background="{StaticResource PhoneChromeBrush}" IsHitTestVisible="False" >
+						<Image x:Name="image" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" CacheMode="BitmapCache">
+							<Image.Source>
+								<BitmapImage UriSource="http://gamernode.com/upload/manager///Dan%20Crabtree/Reviews/halo-reach-beta-gameplay1285174234.jpg" sg:BitmapImageHelper.IsBackgroundCreationEnabled="True" />
+							</Image.Source>
+						</Image>
+					</Border>
+				</StackPanel>
+			</Grid>
+		</local:TiltContentControl>
+		
+		<local:TiltContentControl x:Name="smallTemplate" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
+			<UIElement.RenderTransform>
+				<CompositeTransform/>
+			</UIElement.RenderTransform>
+
+			<Grid x:Name="grid2" Background="Transparent">
+				<StackPanel x:Name="textGrid" Margin="24,2,0,12" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300" CacheMode="BitmapCache" Background="Red">
+					<TextBlock x:Name="title2" Text="Test this out with one line, then extend to two lines, go to three lines" FontSize="{StaticResource PhoneFontSizeMediumLarge}" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,4" LineStackingStrategy="BlockLineHeight" />
+					<TextBlock x:Name="feedName2" Text="Engadget" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" FontSize="20" Margin="0,4,0,0" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontWeight="Bold" />
+					<Rectangle x:Name="mediaTypesIcon2" Fill="{StaticResource PhoneAccentBrush}" Height="32" Width="128" HorizontalAlignment="Left" Margin="0,12,0,0" >
+						<Rectangle.OpacityMask>
+							<ImageBrush ImageSource="/Assets/Icons/mediaTypeIcons/zuneDL.png"/>
+						</Rectangle.OpacityMask>
+					</Rectangle>
+				</StackPanel>
+				<Rectangle Fill="Beige" Opacity=".3" VerticalAlignment="Center" Height="181" Margin="24,2,156,12" />
+				<Border x:Name="imageRect" 
+					Margin="0,12,24,12" VerticalAlignment="Top" HorizontalAlignment="Right"
+					Width="120" Height="120" 
+					BorderBrush="#FF777777" CacheMode="BitmapCache" BorderThickness="1" Background="{StaticResource PhoneChromeBrush}" 
+					>
+					<Image x:Name="image2" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" CacheMode="BitmapCache">
+						<Image.Source>
+							<BitmapImage UriSource="http://gamernode.com/upload/manager///Dan%20Crabtree/Reviews/halo-reach-beta-gameplay1285174234.jpg" sg:BitmapImageHelper.IsBackgroundCreationEnabled="True" />
+						</Image.Source>
+					</Image>
+				</Border>
+
+				<!--Rectangle Fill="#FF9CFF00" Height="1" VerticalAlignment="Top" Margin="0,12,0,0"/>
+				<Rectangle Fill="Red" Height="5" VerticalAlignment="Top" Margin="0,7,0,0"/>
+				<Rectangle Fill="Red" Height="1" VerticalAlignment="Center"/>
+				<Rectangle Fill="Red" Height="5" VerticalAlignment="Bottom" Margin="0,0,0,7"/-->
+			</Grid>
+		</local:TiltContentControl>
+    </StackPanel>
+
+</weave:WeavePage>

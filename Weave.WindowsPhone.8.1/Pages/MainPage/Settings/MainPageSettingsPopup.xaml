@@ -1,0 +1,143 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
+	x:Class="weave.MainPageSettingsPopup"
+	mc:Ignorable="d"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	d:DesignHeight="800" d:DesignWidth="480">
+	<UserControl.Resources>
+		<Storyboard x:Name="RotationSB" BeginTime="0:0:4" RepeatBehavior="Forever" AutoReverse="True">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:4" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:7" Value="0">
+					<!--EasingDoubleKeyFrame.EasingFunction>
+						<QuadraticEase EasingMode="EaseIn"/>
+					</EasingDoubleKeyFrame.EasingFunction-->
+				</EasingDoubleKeyFrame>
+					<EasingDoubleKeyFrame KeyTime="0:0:11" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid1">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:7" Value="1">
+					<!--EasingDoubleKeyFrame.EasingFunction>
+						<QuadraticEase EasingMode="EaseIn"/>
+					</EasingDoubleKeyFrame.EasingFunction-->
+				</EasingDoubleKeyFrame>
+				<EasingDoubleKeyFrame KeyTime="0:0:11" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+	
+	<Grid x:Name="LayoutRoot">
+	
+		<!--ScrollViewer-->
+			
+				<StackPanel Orientation="Vertical" Margin="12,0">
+
+			<ScrollViewer Height="256">
+						<Grid>
+								   
+						<Grid x:Name="grid" CacheMode="BitmapCache">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<TextBlock Text="Article preview..." Foreground="{StaticResource PhoneAccentBrush}" d:LayoutOverrides="Height" Margin="12,0,12,12"/>
+							
+							<Grid Grid.Row="1">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="Auto"/>
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+									
+									
+								<Grid x:Name="textGrid" Margin="12,0" VerticalAlignment="Center">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="Auto" />
+										<RowDefinition Height="Auto" />
+									</Grid.RowDefinitions>
+									<TextBlock x:Name="title" Text="Here is where the article title will appear.  Choose a size and font thickness below" FontSize="{StaticResource PhoneFontSizeMediumLarge}" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,4" LineStackingStrategy="BlockLineHeight" />
+									<toolkit:WrapPanel x:Name="timeAndSourceWrapPanel" VerticalAlignment="Top" Grid.Row="1" >
+										<TextBlock x:Name="publishedDateOverlay" Text="Article source" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" FontSize="20" Margin="0,4,9,0" TextWrapping="Wrap" Grid.Row="1" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontWeight="Bold" />
+										<TextBlock x:Name="publishedDate" Text="x hours ago" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" TextWrapping="Wrap" Grid.Row="1" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,4,0,0" FontSize="20" Opacity="0.8" />
+									</toolkit:WrapPanel>
+								</Grid>
+									
+								<StackPanel x:Name="imageWrap" Margin="0,9,12,0" Grid.Column="2" VerticalAlignment="Top">
+									<Rectangle x:Name="imageRect" 
+										Stretch="UniformToFill" RadiusX="0" RadiusY="0" 
+										Width="120" Height="120" 
+										Stroke="#FF777777" 
+									 >
+										<Rectangle.Fill>
+											<ImageBrush x:Name="image" Stretch="UniformToFill" ImageSource="/Assets/pancake-bunny.jpg"/>
+										</Rectangle.Fill>
+									</Rectangle>
+								</StackPanel>	
+							</Grid>
+							
+						</Grid>
+						
+						
+						<Grid x:Name="grid1" CacheMode="BitmapCache" Opacity="0">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<TextBlock Text="Article content preview..." Foreground="{StaticResource PhoneAccentBrush}" Margin="12,0,12,14" d:LayoutOverrides="Height"/>
+							<TextBlock x:Name="description" Grid.Row="1" TextWrapping="Wrap" FontSize="24" Margin="12,0" Text="The main article text will appear here.  Choose a font size (and a font thickness) that will allow for a pleasant reading experience.  The best size/thickness combos are typically small/fat, medium/regular, and large/skinny!" />
+						</Grid>
+
+					</Grid>
+				</ScrollViewer>
+				
+					<TextBlock Text="Font size" Foreground="{StaticResource PhoneTextBoxBrush}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="12,24,12,-12"/>
+					<toolkit:ListPicker x:Name="fontSizePicker" SelectedIndex="1">
+						<toolkit:ListPickerItem Content="small"/>
+						<toolkit:ListPickerItem Content="medium"/>
+						<toolkit:ListPickerItem Content="medium large (default)"/>
+						<toolkit:ListPickerItem Content="large"/>
+						<toolkit:ListPickerItem Content="extra large"/>
+					</toolkit:ListPicker>
+					
+					<TextBlock Text="Font thickness" Foreground="{StaticResource PhoneTextBoxBrush}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="12,24,12,-12"/>
+					<toolkit:ListPicker x:Name="fontThicknessPicker" SelectedIndex="2">
+						<toolkit:ListPickerItem Content="very skinny"/>
+						<toolkit:ListPickerItem Content="skinny"/>
+						<toolkit:ListPickerItem Content="regular (default)"/>
+						<toolkit:ListPickerItem Content="fat"/>
+					</toolkit:ListPicker>
+						
+					<TextBlock Text="New article coloring" Foreground="{StaticResource PhoneTextBoxBrush}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="12,24,12,-12" Visibility="Collapsed"/>
+					<toolkit:ListPicker x:Name="newArticleColoringPicker" SelectedIndex="1" Visibility="Collapsed">
+						<toolkit:ListPickerItem>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock TextWrapping="Wrap" Text="new articles in "/>				
+								<Rectangle Fill="{StaticResource PhoneAccentBrush}" Height="36" Width="36" Margin="0,0,2,0"/>
+								<TextBlock TextWrapping="Wrap" Text=", old articles in "/>
+								<Rectangle Fill="{StaticResource PhoneSubtleBrush}" Height="36" Width="36"/>    								
+							</StackPanel>		
+						</toolkit:ListPickerItem>
+						<toolkit:ListPickerItem>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock TextWrapping="Wrap" Text="new articles in "/>				
+								<Rectangle Height="36" Width="36" Margin="0,0,2,0" Fill="#FFE2911B"/>
+								<TextBlock TextWrapping="Wrap" Text=", old articles in "/>
+								<Rectangle Fill="{StaticResource PhoneAccentBrush}" Height="36" Width="36"/>    								
+							</StackPanel>		
+						</toolkit:ListPickerItem>
+					</toolkit:ListPicker>
+				
+			</StackPanel>
+	</Grid>
+</UserControl>

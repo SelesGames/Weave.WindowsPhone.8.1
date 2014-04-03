@@ -1,0 +1,39 @@
+﻿<phone:PhoneApplicationPage
+	x:Class="weave.MainPageSettingsPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:weave"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="Portrait" Orientation="Portrait"
+	mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480">
+	
+	<UserControl.Resources>
+		<local:UppercaseConverter x:Key="uppercaseConverter" />
+	</UserControl.Resources>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<!--Pivot Control-->
+		<controls:Pivot DataContext="{StaticResource PanoramaTitle}" Title="{Binding Converter={StaticResource uppercaseConverter}}">
+					  
+			<controls:Pivot.HeaderTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding}" Margin="2,12,-8,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
+				</DataTemplate>
+			</controls:Pivot.HeaderTemplate>          
+			   
+			<!--Pivot item one-->
+			<controls:PivotItem Header="text" Margin="0,28,0,0">
+				<local:MainPageSettingsPopup />
+			</controls:PivotItem>
+		</controls:Pivot> 
+	</Grid>
+ 
+</phone:PhoneApplicationPage>

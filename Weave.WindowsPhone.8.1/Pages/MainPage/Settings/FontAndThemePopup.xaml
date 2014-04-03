@@ -1,0 +1,112 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
+	xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+	xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input" 
+	xmlns:weave="clr-namespace:weave"
+    xmlns:settings="clr-namespace:Weave.Settings"
+	x:Class="weave.FontAndThemePopup"
+	mc:Ignorable="d"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	d:DesignHeight="800" d:DesignWidth="480">
+
+	<UserControl.Resources>
+		
+		<Storyboard x:Name="OpenSB">
+			<DoubleAnimation Duration="0:0:0.3" From="300" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" >
+				<DoubleAnimation.EasingFunction>
+					<QuarticEase EasingMode="EaseOut"/>
+				</DoubleAnimation.EasingFunction>
+			</DoubleAnimation>
+		</Storyboard>
+		<Storyboard x:Name="CloseSB">
+			<DoubleAnimation Duration="0:0:0.3" From="0" To="300" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" >
+				<DoubleAnimation.EasingFunction>
+					<QuarticEase EasingMode="EaseIn"/>
+				</DoubleAnimation.EasingFunction>
+			</DoubleAnimation>
+		</Storyboard>
+
+		<DataTemplate x:Key="SlideViewItemTemplate">
+			<Grid CacheMode="BitmapCache">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="120" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock Text="Aa" FontFamily="{Binding FontFamily}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="80"/>
+				<TextBlock Grid.Row="1" Text="{Binding FontName}" HorizontalAlignment="Center" Margin="0,-6,0,0" MaxWidth="96" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{Binding FontFamily}"/>
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="FontPickerItemTemplate">
+			<Grid CacheMode="BitmapCache">
+				<TextBlock Text="{Binding DisplayName}" FontSize="{Binding TitleSize}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource PhoneFontFamilyNormal}" />
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="ArticleListFormatItemTemplate">
+			<Grid CacheMode="BitmapCache">
+				<TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" FontFamily="{StaticResource PhoneFontFamilyNormal}" TextAlignment="Right" />
+			</Grid>
+		</DataTemplate>
+
+		<!--DataTemplate x:Key="ArticleListFormatExpandedItemTemplate">
+			<StackPanel CacheMode="BitmapCache">
+				<TextBlock Text="{Binding DisplayName}" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+				<TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" />
+			</StackPanel>
+		</DataTemplate-->
+
+		<settings:FontSizes x:Key="FontSizes" />
+        <settings:ArticleListFontSet x:Key="Fonts" />
+        <settings:ArticleListFormats x:Key="ArticleListFormats" />
+
+		<SolidColorBrush x:Key="SubtleBrush" Color="#BFFFFFFF"/>
+		<SolidColorBrush x:Key="ForegroundBrush" Color="White"/>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid Background="{StaticResource TransparentBrush}" MouseLeftButtonDown="OnOutsideTap"/>
+		<Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" Background="#FF1F1F1F" MaxWidth="480" VerticalAlignment="Bottom" Height="440">
+			<Grid.RenderTransform>
+				<CompositeTransform/>
+			</Grid.RenderTransform>
+						
+			<StackPanel>
+				<TextBlock Text="List format" Foreground="{StaticResource SubtleBrush}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" IsHitTestVisible="False" CacheMode="BitmapCache" Margin="24,20,24,0"/>
+				<telerikInput:RadListPicker x:Name="articleListFormatPicker" ItemsSource="{StaticResource ArticleListFormats}" SelectionChanged="ArticleListFontFormatPicker_SelectionChanged" ItemTemplate="{StaticResource ArticleListFormatItemTemplate}" Foreground="Black" BorderBrush="#BFFFFFFF" Background="#BFFFFFFF" Style="{StaticResource FontSizePopupRadListPickerStyle}" InlineModeThreshold="8" Margin="24,-2,24,0" />
+				
+				<TextBlock Text="List item font size" Foreground="{StaticResource SubtleBrush}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="24,20,24,0" IsHitTestVisible="False" CacheMode="BitmapCache"/>
+				<telerikInput:RadListPicker x:Name="fontSizePicker" ItemsSource="{StaticResource FontSizes}" Margin="24,-2,24,0" SelectionChanged="FontSizePicker_SelectionChanged" ItemTemplate="{StaticResource FontPickerItemTemplate}" Foreground="Black" BorderBrush="#BFFFFFFF" Background="#BFFFFFFF" Style="{StaticResource FontSizePopupRadListPickerStyle}" />
+				
+				<TextBlock Text="List item font" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Margin="24,20,24,0" IsHitTestVisible="False" CacheMode="BitmapCache" Foreground="{StaticResource SubtleBrush}"/>
+				<Grid Height="184">
+					<telerikPrimitives:RadSlideView x:Name="fontSelector" ItemsSource="{StaticResource Fonts}" ItemTemplate="{StaticResource SlideViewItemTemplate}" ItemPreviewTemplate="{StaticResource SlideViewItemTemplate}" AdjacentItemsPreviewMode="Both" Padding="145,0" Margin="24,-8,24,0" SelectionChanged="fontSelector_SelectionChanged" CacheMode="BitmapCache" Foreground="{StaticResource ForegroundBrush}" />
+
+					<Rectangle x:Name="leftFade" HorizontalAlignment="Left" Width="47" Margin="24,0,0,0" IsHitTestVisible="False" CacheMode="BitmapCache">
+						<Rectangle.Fill>
+							<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+								<GradientStop Color="#E51F1F1F" Offset="0.187"/>
+								<GradientStop Color="#001F1F1F" Offset="1"/>
+							</LinearGradientBrush>
+						</Rectangle.Fill>
+					</Rectangle>
+					<Rectangle x:Name="rightFade" HorizontalAlignment="Right" Grid.Row="1" Width="47" Margin="0,0,24,0" IsHitTestVisible="False" CacheMode="BitmapCache">
+						<Rectangle.Fill>
+							<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+								<GradientStop Color="#E51F1F1F" Offset="0.813"/>
+								<GradientStop Color="#001F1F1F"/>
+							</LinearGradientBrush>
+						</Rectangle.Fill>
+					</Rectangle>
+					<Ellipse Fill="{StaticResource PhoneAccentBrush}" Width="9" Height="9" Margin="0,12,0,150" VerticalAlignment="Top" IsHitTestVisible="False" />
+				</Grid>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</UserControl>

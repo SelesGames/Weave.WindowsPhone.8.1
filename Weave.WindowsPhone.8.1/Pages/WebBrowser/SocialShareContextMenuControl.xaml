@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="weave.SocialShareContextMenuControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	xmlns:local="clr-namespace:weave"
+	xmlns:sg="clr-namespace:SelesGames.Phone.Controls;assembly=SelesGames.Phone.Controls"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	d:DesignHeight="800" d:DesignWidth="480">
+	
+	<UserControl.Resources>
+		<Style x:Key="TileStyle" TargetType="local:TileButton">
+			<Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
+			<Setter Property="BorderBrush" Value="{StaticResource PhoneBackgroundBrush}"/>		
+		</Style>
+		
+		<BackEase x:Key="BackEaseOut" EasingMode="EaseOut" Amplitude="0.4" />
+
+		<Storyboard x:Name="VerticalOpenSB">
+			<DoubleAnimation BeginTime="0:0:0.05" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="smsButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.00" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="emailButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.00" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="socialShareButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.05" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ieButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			
+			<DoubleAnimation BeginTime="0:0:0.04"  Duration="0:0:0.3" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="instapaperButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.02"  Duration="0:0:0.2" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="pocketButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.04"  Duration="0:0:0.1" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="oneNoteButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			
+			<DoubleAnimation Duration="0:0:0.10" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle"/>
+			<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContainer"/>
+		</Storyboard>
+
+
+		<Storyboard x:Name="VerticalCloseSB">
+			<DoubleAnimation BeginTime="0:0:0.00" Duration="0:0:0.2" To="48" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="buttonContainer"/>
+			<DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.1" Duration="0:0:0.1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContainer" d:IsOptimized="True"/>
+		</Storyboard>
+		
+		<Storyboard x:Name="HorizontalOpenSB">
+			<DoubleAnimation BeginTime="0:0:0.05" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="smsButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.00" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="emailButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.00" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="socialShareButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.05" Duration="0:0:0.4" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="ieButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			
+			<DoubleAnimation BeginTime="0:0:0.04"  Duration="0:0:0.3" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="instapaperButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.02"  Duration="0:0:0.2" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="pocketButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			<DoubleAnimation BeginTime="0:0:0.04"  Duration="0:0:0.1" From="48" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="oneNoteButton" EasingFunction="{StaticResource BackEaseOut}"/>
+			
+			<DoubleAnimation Duration="0:0:0.10" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle"/>
+			<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContainer"/>
+		</Storyboard>
+		
+		<Storyboard x:Name="HorizontalCloseSB">
+			<DoubleAnimation BeginTime="0:0:0.00" Duration="0:0:0.2" To="48" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="buttonContainer"/>
+			<DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+			<DoubleAnimation BeginTime="0:0:0.1" Duration="0:0:0.1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="buttonContainer" d:IsOptimized="True"/>
+		</Storyboard>
+
+	</UserControl.Resources>
+		
+			
+	<Grid x:Name="LayoutRoot">
+		<Rectangle x:Name="rectangle" MouseLeftButtonDown="OnOutsideTap" Opacity="0">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Transparent" Offset="-0.22"/>
+					<GradientStop Color="{StaticResource PhoneBackgroundColor}" Offset="0.55"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+		<StackPanel x:Name="buttonContainer" VerticalAlignment="Bottom" Margin="12,0,12,96" RenderTransformOrigin="0.5,0.5">
+			<UIElement.RenderTransform>
+				<CompositeTransform/>
+			</UIElement.RenderTransform>
+		
+			<StackPanel x:Name="topRowContainer" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,24">
+				<local:TileButton x:Name="instapaperButton" Label="Instapaper" ImageSource="/Assets/Icons/64x64_instapaper.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+				<local:TileButton x:Name="pocketButton" Label="Pocket" ImageSource="/Assets/Icons/pocket.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+				<local:TileButton x:Name="oneNoteButton" Label="OneNote" ImageSource="/Assets/Icons/64x64_socialshare.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+			</StackPanel>
+
+			<StackPanel x:Name="bottomRowContainer" Orientation="Horizontal" HorizontalAlignment="Center">
+				<local:TileButton x:Name="smsButton" Label="sms" ImageSource="/Assets/Icons/64x64_sms.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+				<local:TileButton x:Name="emailButton" Label="email" ImageSource="/Assets/Icons/48x48_email.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+				<local:TileButton x:Name="socialShareButton" Label="social" ImageSource="/Assets/Icons/64x64_socialshare.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+				<local:TileButton x:Name="ieButton" Label="ie" ImageSource="/Assets/Icons/64x64_ie.png" Style="{StaticResource TileStyle}" RenderTransformOrigin="0.5,0.5" Margin="6,0" >
+					<local:TileButton.Projection>
+						<PlaneProjection/>
+					</local:TileButton.Projection>
+					<local:TileButton.RenderTransform>
+						<CompositeTransform />
+					</local:TileButton.RenderTransform>
+				</local:TileButton>
+			</StackPanel>
+
+		</StackPanel>
+	</Grid>
+</UserControl>
